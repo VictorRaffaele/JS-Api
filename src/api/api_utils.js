@@ -1,9 +1,15 @@
 function regexEmail(email) {
-    const funcTag = 'regexEmail';
+    const funcTag = '[regexEmail]';
     try {
         console.log(`${funcTag} Checking if email is valid`);
         const re = /\S+@\S+\.\S+/;
-        return re.test(email);
+        const valid = re.test(email);
+        if (!valid) {
+            console.log(`${funcTag} Email has invalid format`);
+            return false;
+        }
+        console.log(`${funcTag} Email is valid`);
+        return true;
     } catch (error) {
         console.error(`${funcTag} ${error.message}`);
         return false;
@@ -11,23 +17,35 @@ function regexEmail(email) {
 }
 
 function regexName(name) {
-  const funcTag = 'regexName';
+  const funcTag = '[regexName]';
   try {
-      console.log(`${funcTag} Checking if name is valid`);
-      const re = /^[a-zA-Z]+$/;
-      return re.test(name);
+        console.log(`${funcTag} Checking if name is valid`);
+        const re = /^[a-zA-Z]+$/;
+        const valid = re.test(name);
+        if (!valid) {
+            console.log(`${funcTag} Name has invalid format`);
+            return false;
+        }
+        console.log(`${funcTag} Name is valid`);
+        return ;
   } catch (error) {
-      console.error(`${funcTag} ${error.message}`);
-      return false;
+        console.error(`${funcTag} ${error.message}`);
+        return false;
   }
 }
 
 function regexPassword(password) {
-    const funcTag = 'regexPassword';
+    const funcTag = '[regexPassword]';
     try {
         console.log(`${funcTag} Checking if password is valid`);
         const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        return re.test(password);
+        const valid = re.test(password);
+        if (!valid) {
+            console.log(`${funcTag} Password has invalid format`);
+            return false;
+        }
+        console.log(`${funcTag} Password is valid`);
+        return true;
     } catch (error) {
         console.error(`${funcTag} ${error.message}`);
         return false;
