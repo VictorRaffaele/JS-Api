@@ -5,6 +5,7 @@ const { validateData, emailExists } = require('./email_validations');
 async function createEmail(req, res) {
     const funcTag = '[createEmail]';
     try {
+        console.log(`${funcTag} Starting email insert process`);
         const { email } = req.body;
 
         const valid = validateData('create', email, null)

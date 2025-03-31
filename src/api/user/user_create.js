@@ -5,7 +5,7 @@ const crypto = require('crypto');
 async function userCreate (req, res) {
     const funcTag = '[userCreate]';
     try {
-        console.log(`${funcTag} Inserting user data in users table`);
+        console.log(`${funcTag} Starting user insert process`);
         const { username, email, password } = req.body;
 
         const invalid = await validateData('create', username, password);
@@ -30,12 +30,15 @@ async function userCreate (req, res) {
             console.error(`${funcTag} Email creation failed: ${responseData.error}`);
             throw new Error(responseData.error);
         }
+
+        console.log(`${funcTag} Inserting user data in users table`);
         const userQuery = `
             INSERT INTO users (user_id, username, email, password)
             VALUES ($1, $2, $3, $4)
             RETURNING *;
         `;
         const user = await query(userQuery, [crypto.randomUUID(), username, responseData.data.email_id, password]);
+        console.log(`${funcTag} User created successfully`);
         res.status(201).json( { data: user.rows[0], message: 'User created', error: null } );
     } catch (error) {
         console.error(`${funcTag} User creation failed: ${error.message}`);
