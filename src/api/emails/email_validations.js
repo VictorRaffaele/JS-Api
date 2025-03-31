@@ -9,14 +9,12 @@ function validateData(validationType, email, email_id) {
         switch (validationType) {
           case 'create':
               const invalid = validadeEmail(email)
-              console.log(invalid)
               if (invalid) {
                   throw invalid;
               }
               break;
           case 'update':
               const invalidEmail = validadeEmail(email)
-
               if (invalidEmail) {
                   throw invalidEmail;
               }
