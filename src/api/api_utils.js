@@ -27,7 +27,7 @@ function regexName(name) {
             return false;
         }
         console.log(`${funcTag} Name is valid`);
-        return ;
+        return true;
   } catch (error) {
         console.error(`${funcTag} ${error.message}`);
         return false;
