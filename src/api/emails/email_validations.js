@@ -94,4 +94,4 @@ async function emailExists(email) {
     }
 }
 
-module.exports = { validateData, emailExists };
+module.exports = { validateData, emailExists, validadeEmail };
