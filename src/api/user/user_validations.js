@@ -1,7 +1,8 @@
 const { regexName, regexPassword } = require('../api_utils');
+const { validadeEmail } = require('../emails/email_validations');
 const { query } = require('../../config/database');
 
-function validateData(validationType, username, password) {
+async function validateData(validationType, username, password, email, user_id) {
     const funcTag = '[validateData]';
     try {
         console.log(`${funcTag} Validating data`);
@@ -15,6 +16,44 @@ function validateData(validationType, username, password) {
                 const invalidPassword = validatePassword(password);
                 if (invalidPassword) {
                     throw invalidPassword;
+                }
+                break;
+            case 'update':
+                if (username) {
+                    const invalidName = validateName(username);
+                    if (invalidName) {
+                        throw invalidName;
+                    }
+                    const nameExistsCheck = await nameExists(username);
+                    if (nameExistsCheck) {
+                        throw nameExistsCheck;
+                    }
+                }
+                if (password) {
+                    const invalidPassword = validatePassword(password);
+                    if (invalidPassword) {
+                        throw invalidPassword;
+                    }
+                }
+                if (email) {
+                    const invalidEmail = validadeEmail(email);
+                    if (invalidEmail) {
+                        throw invalidEmail;
+                    }
+                }
+                if (user_id) {
+                    const invalidId = validadeNameId(user_id);
+                    if (invalidId) {
+                        throw invalidId;
+                    }
+                }
+                break;
+            case 'delete':
+                if (user_id) {
+                    const invalidId = validadeNameId(user_id);
+                    if (invalidId) {
+                        throw invalidId;
+                    }
                 }
                 break;
             default:
@@ -83,6 +122,22 @@ async function nameExists(name) {
         return null;
     } catch (error) {
         console.error(`${funcTag} Error checking name: ${error.message}`);
+        return error;
+    }
+}
+
+function validadeNameId(email_id) {
+    const funcTag = '[validadeNameId]';
+    try {
+        console.log(`${funcTag} Validating name_id`);
+        if (!email_id) {
+          console.log(`${funcTag} No name_id received`);
+          throw new Error('Name ID is required');
+        }
+        console.log(`${funcTag} Name_id is valid`);
+        return null;
+    } catch (error) {
+        console.error(`${funcTag} Error validating name_id: ${error.message}`);
         return error;
     }
 }
