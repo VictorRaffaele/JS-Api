@@ -4,6 +4,8 @@ const { validateData } = require('./email_validations');
 async function deleteEmail(req, res) {
     const funcTag = '[deleteEmail]';
     try {
+        console.log(`${funcTag} Starting email deletion process`);
+
         const { email_id } = req.body;
         const valid = validateData('delete', null, email_id)
         if (valid) {
@@ -17,7 +19,7 @@ async function deleteEmail(req, res) {
             RETURNING email_id;
         `;
         const emailData = await query(textQuery, [email_id]);
-        console.log(`${funcTag} Email deleted`);
+        console.log(`${funcTag} Email deleted successfully`);
         res.status(200).json({ data: emailData.rows[0], message: 'Email deleted', error: null });
     } catch (error) {
         console.error(`${funcTag} Email deletion failed: ${error.message}`);
